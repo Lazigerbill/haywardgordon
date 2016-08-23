@@ -1,3 +1,5 @@
+import {Meteor} from 'meteor/meteor'
+
 Template.topNavbar.rendered = function(){
 
     // FIXED TOP NAVBAR OPTION
@@ -44,6 +46,7 @@ Template.topNavbar.events({
         Meteor.logout();
         Router.go('login');
         toastr.warning("You are now logged out.", "Good-bye")
+        Meteor.call('disconnectBroker');
     }
     
 });

@@ -1,3 +1,5 @@
+import {Meteor} from 'meteor/meteor';
+
 Template.login.events({
 	'submit form': function(event){
 		event.preventDefault();
@@ -7,8 +9,10 @@ Template.login.events({
     	if(error){
     		toastr.error(error.reason, "Log in error");
     	} else {
+            Meteor.call('connectBroker');
     		Router.go('pageOne');
             toastr.success('Log in successful!')
+
     	}
     });
 	}
