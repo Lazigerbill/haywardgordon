@@ -45,8 +45,8 @@ Template.topNavbar.events({
         event.preventDefault();
         Meteor.logout();
         Router.go('login');
+        // Meteor.call('disconnectBroker');
         toastr.warning("You are now logged out.", "Good-bye")
-        Meteor.call('disconnectBroker');
     }
     
 });

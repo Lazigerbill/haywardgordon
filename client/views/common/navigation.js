@@ -5,8 +5,8 @@ Template.navigation.rendered = function(){
 
 };
 
-Template.navigation.helpers({
-	currentuser: function(){
-		return Meteor.user().profile.firstname + " " + Meteor.user().profile.lastname
-	}
-});
+// Template.navigation.helpers({
+// 	currentuser: function(){
+// 		return Meteor.user().profile.firstname + " " + Meteor.user().profile.lastname
+// 	}
+// });

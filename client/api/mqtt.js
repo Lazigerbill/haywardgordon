@@ -1,8 +1,4 @@
-import { Meteor } from 'meteor/meteor';
-import { Machine1 } from '../db/mongo.js';
-// // include npm package in meteor
-// // https://www.npmjs.com/package/mqtt
-import mqtt from 'mqtt';
+
 
 
 Meteor.methods({
@@ -16,12 +12,12 @@ Meteor.methods({
 		  		port: 1883,
 		  		username: Meteor.settings.mqtt.username,
 		  		password: Meteor.settings.mqtt.password,
-		  		clientId: Meteor.settings.mqtt.clientId + this.userId
+		  		clientId: Meteor.settings.mqtt.clientId + this.userId + 'server'
 		  	});
 		  
 		client.on('connect', function () {
 		  	client.subscribe('iot-2/type/Accuvim001/id/+/evt/+/fmt/+');
-		  	console.log('connected: ' +  client.parse())
+		  	console.log('connected: ' +  client.options.clientId);
 		});
 
 		client.on('reconnect', function () {
@@ -51,9 +47,9 @@ Meteor.methods({
 		  		password: Meteor.settings.mqtt.password,
 		  		clientId: Meteor.settings.mqtt.clientId + this.userId
 		  	});
-		client.end();
+		client.end(true);
 		client.on('close', function(){
-			console.log('client disconnected from broker.')
+			console.log(client.options.clientId + ' disconnected from broker.')
 		});
 	}
 });

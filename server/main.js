@@ -1,4 +1,5 @@
-Meteor.startup(() => {
+// Meteor.startup(() => {
 
+// });
 
-});
+import '/imports/startup/server';
