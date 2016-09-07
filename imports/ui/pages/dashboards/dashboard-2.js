@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Machines } from '../../../api/machines/machines.js';
 import '../../../api/machines/machines.js';
-import '../../components/dataCard.js';
+// import '../../components/dataCard.js';
 // import '../../components/dataCard.html';
 import './dashboard-2.html';
 

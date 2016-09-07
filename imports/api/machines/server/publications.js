@@ -6,7 +6,7 @@ Meteor.publish('last24', function(startTime){
 	return data;
 });
 
-// Meteor.publish('allData', function() {
-// 	const data = Machines.find();
-// 	return data
-// });
+Meteor.publish('chartData', function(startTime) {
+	const data = Machines.find({ts: {$gt: startTime}}, {fields: {ts:1, "message.apower":1}});
+	return data
+});
