@@ -39,3 +39,5 @@ accounts-password						#User account login system
 email												#email SMTP
 chrismbeckett:toastr				#growl-like notification
 
+reactive-dict
+momentjs:moment

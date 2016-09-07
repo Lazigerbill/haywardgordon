@@ -1,3 +1,5 @@
+import './dashboard-1.html';
+
 Template.dashboard1.helpers({
 
     // For demo purpose

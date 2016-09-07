@@ -1,3 +1,5 @@
+import './dashboard-3.html';
+
 Template.dashboard3.rendered = function(){
 
     // Set white background color for top navbar

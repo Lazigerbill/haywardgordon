@@ -9,7 +9,7 @@ Template.login.events({
     	if(error){
     		toastr.error(error.reason, "Log in error");
     	} else {
-    		Router.go('pageOne');
+    		Router.go('totemdash');
             toastr.success('Log in successful!')
     	}
     });

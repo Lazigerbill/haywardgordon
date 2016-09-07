@@ -20,7 +20,7 @@ client.on('message', Meteor.bindEnvironment(function callback(topic, message) {
   console.log(message.toString());
   Machines.insert({
     message: JSON.parse(message.toString()).d,
-    ts: JSON.parse(message.toString()).ts
+    ts: new Date(JSON.parse(message.toString()).ts) //best practice is to save datetime in BSON objects in MONGODB
   })
   // const parse_message = JSON.parse(message.toString());
   // $('#voltage').html(parse_message.d.v12.toFixed(7));

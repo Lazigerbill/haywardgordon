@@ -1,3 +1,5 @@
+import './dashboard-4l.html';
+
 Template.dashboard4l.rendered = function(){
 
 

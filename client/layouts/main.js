@@ -1,7 +1,9 @@
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import './main.html';
-
+import { Machines } from '../../imports/api/machines/machines.js';
 Template.mainLayout.rendered = function(){
+
 
     // Minimalize menu when screen is less than 768px
     $(window).bind("resize load", function () {
@@ -55,5 +57,30 @@ Template.mainLayout.rendered = function(){
     // Uncomment this if you want to have boxed layout
     // $('body').addClass('boxed-layout');
 
+    // more elegant solution here: subscribe to all data, but only monitor added new data
+    // insert newly added data to session, and the entire template/sub template can just feed off session variables
+    const startTime = new Date(new Date().setDate(new Date().getDate()-1));
+    // set startTime so the subsciption will only limit data to within the last day(24hrs)
+    // a bit tricky here to do datetime caculation, I've decided to save everything datetime in JS BSON objects 
+    // using startTime as a subscription argument, the publication should only return everything within the last 24 hrs
+    this.subscribe('last24', startTime, function(){
+        let initializing = true;
+            Machines.find().observeChanges({
+                added: function(id, doc) {
+                    if (!initializing) {
+                        Session.set({
+                            'ts': doc.ts,
+                            'v12': doc.message.v12,
+                            'fq': doc.message.fq,
+                            'apower': doc.message.apower,
+                            'current': doc.message.current
+                        });
+                    }
+                }
+            });
+        initializing = false;
 
+    });
 };
+
+

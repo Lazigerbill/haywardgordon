@@ -7,6 +7,8 @@
   "dependencies": {
     "bcrypt": "^0.8.7",
     "bufferutil": "^1.2.1",
+    "highcharts": "^4.2.6",
+    "moment": "^2.14.1",
     "mqtt": "^1.14.0",
     "utf-8-validate": "^1.2.1"
   }

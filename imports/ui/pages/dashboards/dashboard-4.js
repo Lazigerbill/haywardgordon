@@ -1,3 +1,5 @@
+import './dashboard-4.html';
+
 Template.dashboard4.rendered = function(){
 
     // Options, data for flot chart
