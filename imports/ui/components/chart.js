@@ -9,11 +9,14 @@ Template.chart.onCreated(function(){
 		const data = Machines.find().fetch();
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
-			processed_json.push([data[i].ts, data[i].message.apower]);
+			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);
 		}
 		liveChart = Highcharts.chart('chart', {
 			chart: {
                 zoomType: 'x'
+            },
+            rangeSelector: {
+                selected: 1
             },
             title: {
             	text: 'Real time power consumption'
@@ -70,9 +73,9 @@ Template.chart.onCreated(function(){
 		        added: function(id, doc) {
 		            if (!initializing) {
 		            	const newPoint = new Array();
-		            	newPoint.push(doc.ts, doc.message.apower);
+		            	newPoint.push(Date.parse(doc.ts), doc.message.apower);
+		            	console.log(newPoint);
 		                liveChart.series[0].addPoint(newPoint, true, true);
-
 		            }
 		        }
 		    });

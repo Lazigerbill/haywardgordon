@@ -1,4 +1,13 @@
 <template name = "chart">
-	<div id="chart">{{createChart}}</div>
-
+	    <div class="col-lg-12">
+	        <div class="ibox float-e-margins">
+	            <div class="ibox-title">
+	                <h5>Scatterplot</h5>
+	                {{>iboxTools}}
+	            </div>
+	            <div class="ibox-content">
+	                <div id="chart">{{createChart}}</div>
+	            </div>
+	        </div>
+	    </div>
 </template>
