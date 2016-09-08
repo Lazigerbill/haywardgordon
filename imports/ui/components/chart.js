@@ -5,14 +5,13 @@ import { Machines } from '../../api/machines/machines.js';
 
 Template.chart.onCreated(function(){
 	const startTime = new Date(new Date().setDate(new Date().getDate()-1));
-	this.subscribe("chartData", startTime, function(){
+	this.subscribe("last24", startTime, function(){
 		const data = Machines.find().fetch();
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
 			processed_json.push([data[i].ts, data[i].message.apower]);
 		}
-			console.log(processed_json)
-		Highcharts.chart('chart', {
+		liveChart = Highcharts.chart('chart', {
 			chart: {
                 zoomType: 'x'
             },
@@ -66,6 +65,18 @@ Template.chart.onCreated(function(){
 			    }
 			 }]
 		})
+		let initializing = true;
+		    Machines.find().observeChanges({
+		        added: function(id, doc) {
+		            if (!initializing) {
+		            	const newPoint = new Array();
+		            	newPoint.push(doc.ts, doc.message.apower);
+		                liveChart.series[0].addPoint(newPoint, true, true);
+
+		            }
+		        }
+		    });
+		initializing = false;
 	});
 })
 

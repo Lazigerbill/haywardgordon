@@ -68,6 +68,7 @@ Template.mainLayout.rendered = function(){
             Machines.find().observeChanges({
                 added: function(id, doc) {
                     if (!initializing) {
+                        // console.log(doc)
                         Session.set({
                             'ts': doc.ts,
                             'v12': doc.message.v12,
