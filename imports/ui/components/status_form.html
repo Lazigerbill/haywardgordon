@@ -6,6 +6,7 @@
                 {{>iboxTools}}
             </div>
             <div class="ibox-content">
+                <label>Meter readings</label>
                 <form class="form-inline rules_form">
                     <div class="form-group">
                         <label>From</label>
@@ -19,7 +20,7 @@
                         <label>State</label>
                         <input type="text" name="state" class="form-control" placeholder="ON/OFF/IDLE" size="17">
                     </div>
-                    <button type="submit" class="btn btn-default">Save</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
                 <hr>
                 <table class="table table-hover">
@@ -32,14 +33,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each Machine1_rules}}
+                        {{#each rules}}
                             <tr>
                                 <td>{{rule.from}}</td>
                                 <td>{{rule.to}}</td>
                                 <td>{{rule.state}}</td>
                                 <td>
-                                    <button type="submit" class="btn btn-default rules_delete"><i class="fa fa-times rules_delete" aria-hidden="true"></i></button>
-                                    <button type="submit" class="btn btn-default rules_delete"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                    <button type="submit" class="btn btn-alert rules_delete"><i class="fa fa-times deleteRule" aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                         {{/each}}

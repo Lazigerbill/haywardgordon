@@ -4,9 +4,10 @@ var Highcharts = require('highcharts/highstock');
 import { Machines } from '../../api/machines/machines.js';
 
 Template.chart.onCreated(function(){
-	const startTime = new Date(new Date().setDate(new Date().getDate()-1));
-	this.subscribe("last24", startTime, function(){
-		const data = Machines.find().fetch();
+	const startTime = new Date(new Date().setTime(new Date().getTime()-3600000));
+	this.subscribe("meterData", function(){
+		const query = Machines.find({ts:{$gte:startTime}});
+		const data = query.fetch();
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
 			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);
@@ -63,46 +64,24 @@ Template.chart.onCreated(function(){
 				type: 'area',
 				name: 'Single phase',
 			    data : processed_json,
+			    gapSize : 2,
 			    tooltip: {
 			        valueDecimals: 4
 			    }
 			 }]
 		})
 		let initializing = true;
-		    Machines.find().observeChanges({
-		        added: function(id, doc) {
-		            if (!initializing) {
-		            	const newPoint = new Array();
-		            	newPoint.push(Date.parse(doc.ts), doc.message.apower);
-		            	console.log(newPoint);
-		                liveChart.series[0].addPoint(newPoint, true, true);
-		            }
-		        }
-		    });
+	    query.observeChanges({
+	        added: function(id, doc) {
+	            if (!initializing) {
+	            	const newPoint = new Array();
+	            	newPoint.push(Date.parse(doc.ts), doc.message.apower);
+	            	console.log(newPoint);
+	                liveChart.series[0].addPoint(newPoint, true, true);
+	            }
+	        }
+	    });
 		initializing = false;
 	});
 })
 
-	// Template.body.helpers({
-	// 	createChart: function () {
-	// 		// Gather data:
-			
-	// 		tasksData = [{
-	// 			y: incompleteTask,
-	// 			name: "Incomplete"
-	// 		}, {
-	// 			y: allTasks - incompleteTask,
-	// 			name: "Complete"
-	// 		}];
-	// 		// Use Meteor.defer() to craete chart after DOM is ready:
-	// 		Meteor.defer(function() {
-	// 		// Create standard Highcharts chart with options:
-	// 			Highcharts.chart('chart', {
-	// 				series: [{
-	// 					type: 'pie',
-	// 					data: tasksData
-	// 				}]
-	// 			});
-	// 		});
-	// 	}
-	// });

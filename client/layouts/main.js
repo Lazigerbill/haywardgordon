@@ -63,7 +63,7 @@ Template.mainLayout.rendered = function(){
     // set startTime so the subsciption will only limit data to within the last day(24hrs)
     // a bit tricky here to do datetime caculation, I've decided to save everything datetime in JS BSON objects 
     // using startTime as a subscription argument, the publication should only return everything within the last 24 hrs
-    this.subscribe('last24', startTime, function(){
+    this.subscribe('meterData', startTime, function(){
         let initializing = true;
             Machines.find().observeChanges({
                 added: function(id, doc) {
