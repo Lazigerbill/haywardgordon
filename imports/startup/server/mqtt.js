@@ -19,18 +19,22 @@ client.on('connect', function () {
 
 client.on('message', Meteor.bindEnvironment(function callback(topic, message) { 
   console.log(message.toString());
+  const state = checkCurrentState(JSON.parse(message.toString()).d.apower);
   Machines.insert({
     message: JSON.parse(message.toString()).d,
-    state: currentState(JSON.parse(message.toString()).d.apower), //function defined below to check against machineRules
+    state: {
+      currentState: state, //function defined below to check against machineRules
+      stateChange: checkForChange(state) //function defined below to check for state change
+    },
     ts: new Date(JSON.parse(message.toString()).ts) //best practice is to save datetime in BSON objects in MONGODB
   });
 }));
 
 // Async function defined here to check apower against user defined machineRules, returns machine state
-function currentState(reading) {
+function checkCurrentState(reading) {
   let result
   Rules.find().forEach(function(rule){
-    if (reading > rule.rule.from && reading < rule.rule.to) {
+    if (reading >= rule.rule.from && reading <= rule.rule.to) {
       result = rule.rule.state
       return
     } else {
@@ -39,3 +43,10 @@ function currentState(reading) {
   });
   return result;
 } 
+
+function checkForChange(currentState) {
+  const lastState = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].state.currentState
+  return currentState != lastState
+}
+
+

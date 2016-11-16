@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './main.html';
 import { Machines } from '../../imports/api/machines/machines.js';
+import { Rules } from '../../imports/api/machines/machines.js';
 Template.mainLayout.rendered = function(){
 
 
@@ -68,13 +69,14 @@ Template.mainLayout.rendered = function(){
             Machines.find().observeChanges({
                 added: function(id, doc) {
                     if (!initializing) {
-                        // console.log(doc)
                         Session.set({
                             'ts': doc.ts,
                             'v12': doc.message.v12,
                             'fq': doc.message.fq,
                             'apower': doc.message.apower,
-                            'current': doc.message.current
+                            'current': doc.message.current,
+                            'state': doc.state.currentState,
+                            'stateChange': doc.state.stateChange
                         });
                     }
                 }
@@ -83,5 +85,3 @@ Template.mainLayout.rendered = function(){
 
     });
 };
-
-

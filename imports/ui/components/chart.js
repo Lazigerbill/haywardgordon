@@ -4,7 +4,7 @@ var Highcharts = require('highcharts/highstock');
 import { Machines } from '../../api/machines/machines.js';
 
 Template.chart.onCreated(function(){
-	const startTime = new Date(new Date().setTime(new Date().getTime()-3600000));
+	const startTime = new Date(new Date().setTime(new Date().getTime()-129600000));
 	this.subscribe("meterData", function(){
 		const query = Machines.find({ts:{$gte:startTime}});
 		const data = query.fetch();
