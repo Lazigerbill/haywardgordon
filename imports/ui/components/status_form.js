@@ -24,7 +24,7 @@ Template.status_form.events({
 	    target.state.value = ''
 	},
 
-'click .deleteRule'(event) {
+	'click .deleteRule'(event) {
 		Rules.remove(this._id);
 	}
 });

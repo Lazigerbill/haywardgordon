@@ -1,4 +1,21 @@
 <template name = "dataCard">
+
+	<div class="col-lg-3">
+	    <div class="ibox float-e-margins">
+	        <div class="ibox-title">
+	            <span class="label label-success pull-right"></span>
+	            <h5>Mahcine State</h5>
+	        </div>
+	        <div class="ibox-content">
+	            <h1 class="no-margins" id="state">
+	            	<i class="fa fa-cog fa-1x fa-fw"></i>{{state}}
+	            </h1>
+	            <div class="stat-percent text-success">{{ts}}</div>
+	            <small>Machine Name</small>
+	        </div>
+	    </div>
+	</div>
+
 	<div class="col-lg-3">
 	    <div class="ibox float-e-margins">
 	        <div class="ibox-title">
@@ -7,8 +24,7 @@
 	        </div>
 	        <div class="ibox-content">
 	            <h1 class="no-margins" id="power">{{apower}}W</h1>
-
-	            <div class="stat-percent font-bold text-success">{{ts}} <i class="fa fa-bolt"></i></div>
+	            <div class="stat-percent text-success">{{ts}} <i class="fa fa-bolt"></i></div>
 	            <small>Total power</small>
 	        </div>
 	    </div>
@@ -23,7 +39,7 @@
 	        <div class="ibox-content">
 	            <h1 class="no-margins" id="current">{{current}}A</h1>
 
-	            <div class="stat-percent font-bold text-success">{{ts}} <i class="fa fa-bolt"></i></div>
+	            <div class="stat-percent text-success">{{ts}} <i class="fa fa-bolt"></i></div>
 	            <small>Total power</small>
 	        </div>
 	    </div>
@@ -38,24 +54,10 @@
 	        <div class="ibox-content">
 	            <h1 class="no-margins" id="voltage">{{v12}}V</h1>
 
-	            <div class="stat-percent font-bold text-success">{{ts}} <i class="fa fa-bolt"></i></div>
+	            <div class="stat-percent text-success">{{ts}} <i class="fa fa-bolt"></i></div>
 	            <small>Total power</small>
 	        </div>
 	    </div>
 	</div>
 
-	<div class="col-lg-3">
-	    <div class="ibox float-e-margins">
-	        <div class="ibox-title">
-	            <span class="label label-success pull-right"></span>
-	            <h5>Frequency</h5>
-	        </div>
-	        <div class="ibox-content">
-	            <h1 class="no-margins" id="fq">{{fq}}Hz</h1>
-
-	            <div class="stat-percent font-bold text-success">{{ts}} <i class="fa fa-bolt"></i></div>
-	            <small>Total power</small>
-	        </div>
-	    </div>
-	</div>
 </template>

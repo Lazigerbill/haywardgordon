@@ -30,6 +30,7 @@ Template.chart.onCreated(function(){
                 type: 'datetime'
             },
             yAxis: {
+                floor: 0,
                 title: {
                     text: 'Power'
                 }

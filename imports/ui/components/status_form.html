@@ -1,50 +1,51 @@
 <template name = "status_form">
-    <div class="col-lg-8">
+    <div class="col-lg-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Rules For Machine Status (Based On Power Consumption)</h5>
+                <h5>Rules For Machine State (Based On Power Consumption)</h5>
                 {{>iboxTools}}
             </div>
             <div class="ibox-content">
-                <label>Meter readings</label>
-                <form class="form-inline rules_form">
-                    <div class="form-group">
-                        <label>From</label>
-                        <input type="text" name="from" class="form-control" placeholder="0" size="17">
-                    </div>
-                    <div class="form-group">
-                        <label>To</label>
-                        <input type="text" name="to" class="form-control" placeholder="0" size="17">
-                    </div>
-                    <div class="form-group">
-                        <label>State</label>
-                        <input type="text" name="state" class="form-control" placeholder="ON/OFF/IDLE" size="17">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-                <hr>
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>From</th>
                             <th>To</th>
                             <th>State</th>
-                            <th></th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{#each rules}}
                             <tr>
-                                <td>{{rule.from}}</td>
-                                <td>{{rule.to}}</td>
+                                <td>{{rule.from}}W</td>
+                                <td>{{rule.to}}W</td>
                                 <td>{{rule.state}}</td>
                                 <td>
-                                    <button type="submit" class="btn btn-alert rules_delete"><i class="fa fa-times deleteRule" aria-hidden="true"></i></button>
+                                    <i class="deleteRule fa fa-trash" aria-hidden="true"></i>
                                 </td>
                             </tr>
                         {{/each}}
                     </tbody>
                 </table>
+                <hr> 
+                <!-- Rule form starts here -->
+                <label>User defined rules</label>
+                <form class="rules_form">
+                    <div class="form-group col-lg-4">
+                        <label>From</label>
+                        <input type="text" name="from" class="form-control" placeholder="0W" size="17">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>To</label>
+                        <input type="text" name="to" class="form-control" placeholder="0W" size="17">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>State</label>
+                        <input type="text" name="state" class="form-control" placeholder="ON/OFF/IDLE" size="17">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block m-t">Save</button>
+                </form>
             </div>
         </div>
     </div>    

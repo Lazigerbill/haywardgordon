@@ -13,13 +13,13 @@ Template.dataCard.helpers({
     v12() {
         return Session.get('v12').toFixed(3);
     },
-    fq() {
-        return Session.get('fq').toFixed(2);
-    },
     apower() {
         return Session.get('apower').toFixed(3);
     },
     current() {
         return Session.get('current').toFixed(3);
+    },
+    state() {
+        return Session.get('state');
     }
 });

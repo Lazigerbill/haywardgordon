@@ -31,14 +31,15 @@ client.on('message', Meteor.bindEnvironment(function callback(topic, message) {
 }));
 
 // Async function defined here to check apower against user defined machineRules, returns machine state
+// The ".some" is pretty cool, will break loop if returns True
 function checkCurrentState(reading) {
   let result
-  Rules.find().forEach(function(rule){
+  Rules.find().fetch().some(function(rule){
     if (reading >= rule.rule.from && reading <= rule.rule.to) {
       result = rule.rule.state
-      return
+      return true
     } else {
-      result = undefined  
+      return false
     }
   });
   return result;
