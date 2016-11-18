@@ -46,8 +46,13 @@ function checkCurrentState(reading) {
 } 
 
 function checkForChange(currentState) {
-  const lastState = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].state.currentState
-  return currentState != lastState
+  try {
+    const lastState = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].state.currentState
+    return currentState != lastState
+  }
+  catch(err) {
+    return true
+  }
 }
 
 
