@@ -5,11 +5,11 @@ import { Rules } from '../../api/machines/machines.js';
 var client  = mqtt.connect({
   // Reads variables from file "development_env.json" located in root
   // you have to start meteor and load this file using command "meteor --settings development_env.json"
-  host: Meteor.settings.public.host,
+  host: Meteor.settings.mqtt.host,
   port: 1883,
-  username: Meteor.settings.public.username,
-  password: Meteor.settings.public.password,
-  clientId: Meteor.settings.public.clientId
+  username: Meteor.settings.mqtt.username,
+  password: Meteor.settings.mqtt.password,
+  clientId: Meteor.settings.mqtt.clientId
 });
 
 client.on('connect', function () {

@@ -10,7 +10,7 @@
   		"host": "ng95xg.messaging.internetofthings.ibmcloud.com",
   		"username": "a-ng95xg-hk0pb0kbux",
   		"password": "mJE)J+J@nveT5cXG8X",
-		"clientId": "a:ng95xg:test"
+		"clientId": "a:ng95xg:server"
 	},
 
 	"mail": {
