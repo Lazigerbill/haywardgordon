@@ -1,16 +1,9 @@
 {
-  	"mqtt": {
-    	"host": "ng95xg.messaging.internetofthings.ibmcloud.com",
-    	"username": "a-ng95xg-hk0pb0kbux",
-    	"password": "mJE)J+J@nveT5cXG8X",
-		"clientId": "a:ng95xg:bill_server"
-	},
-
-	"public": {
+	"mqtt": {
   		"host": "ng95xg.messaging.internetofthings.ibmcloud.com",
   		"username": "a-ng95xg-hk0pb0kbux",
   		"password": "mJE)J+J@nveT5cXG8X",
-		"clientId": "a:ng95xg:server"
+		"clientId": "a:ng95xg:production"
 	},
 
 	"mail": {

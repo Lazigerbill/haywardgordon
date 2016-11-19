@@ -6,6 +6,8 @@ export const Machines = new Mongo.Collection('machines');
 
 export const Rules = new Mongo.Collection('machineRules');
 
-Meteor.startup(function () {  
-  Machines._ensureIndex({ "ts": -1});
-});
+if (Meteor.isServer) {
+	Meteor.startup(function () {  
+	  Machines._ensureIndex({ "ts": -1});
+	});
+}
