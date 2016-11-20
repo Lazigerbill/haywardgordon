@@ -8,6 +8,8 @@ Template.chart.onCreated(function(){
 	this.subscribe("meterData", function(){
 		const query = Machines.find({ts:{$gte:startTime}});
 		const data = query.fetch();
+        // test
+        console.log("fetch!!")
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
 			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);

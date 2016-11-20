@@ -3,7 +3,8 @@ import { Machines } from '../machines.js';
 import { Rules } from '../machines.js';
 
 
-Meteor.publish('meterData', function(){
+Meteor.publish('meterData', function(date){
+	// const data = Machines.find(oneDay(date).find, oneDay(date).options);
 	const data = Machines.find();
 	return data;
 });
