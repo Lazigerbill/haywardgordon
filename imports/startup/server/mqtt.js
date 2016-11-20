@@ -14,7 +14,12 @@ var client  = mqtt.connect({
 
 client.on('connect', function () {
   client.subscribe('iot-2/type/Accuvim001/id/+/evt/+/fmt/+');
+  client.subscribeToDeviceStatus();
   console.log('connected to IBM IOTF MQTT Broker');
+});
+
+client.on('deviceStatus', function(deviceType, deviceId, payload, topic){
+  console.log("Device status from :: "+deviceType+" : "+deviceId+" with payload : "+payload);
 });
 
 client.on('message', Meteor.bindEnvironment(function callback(topic, message) { 
