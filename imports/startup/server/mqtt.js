@@ -14,11 +14,7 @@ var client  = mqtt.connect({
 
 client.on('connect', function () {
   client.subscribe('iot-2/type/Accuvim001/id/+/evt/+/fmt/+');
-  console.log('connected');
-  console.log(moment().utc().format());
-  console.log(moment().startOf('day').format());
-  console.log(moment('2016-11-19T02:28:55.098Z').utc().format());
-  console.log(moment('2016-11-19T02:28:55.098Z').startOf('day').utc().format());
+  console.log('connected to IBM IOTF MQTT Broker');
 });
 
 client.on('message', Meteor.bindEnvironment(function callback(topic, message) { 
@@ -51,7 +47,6 @@ function checkCurrentState(reading) {
 
 function checkForChange(currentState) {
   try {
-    // const time = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].ts
     const lastState = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].state.currentState
     return currentState != lastState
   }
@@ -60,5 +55,6 @@ function checkForChange(currentState) {
     return true
   }
 }
+
 
 

@@ -1,15 +1,11 @@
 import './chart.html';
-// import { Highcharts } from 'highcharts';
 var Highcharts = require('highcharts/highstock');
 import { Machines } from '../../api/machines/machines.js';
 
 Template.chart.onCreated(function(){
-	const startTime = new Date(new Date().setTime(new Date().getTime()-129600000));
 	this.subscribe("meterData", function(){
-		const query = Machines.find({ts:{$gte:startTime}});
+		const query = Machines.find({}, {sort: {ts: 1}});
 		const data = query.fetch();
-        // test
-        console.log("fetch!!")
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
 			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);
@@ -79,7 +75,7 @@ Template.chart.onCreated(function(){
 	            if (!initializing) {
 	            	const newPoint = new Array();
 	            	newPoint.push(Date.parse(doc.ts), doc.message.apower);
-	            	console.log(newPoint);
+	            	// console.log(newPoint);
 	                liveChart.series[0].addPoint(newPoint, true, true);
 	            }
 	        }
