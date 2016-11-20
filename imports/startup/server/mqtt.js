@@ -14,7 +14,7 @@ var client  = mqtt.connect({
 
 client.on('connect', function () {
   client.subscribe('iot-2/type/Accuvim001/id/+/evt/+/fmt/+');
-  console.log('connected')
+  console.log('connected to IBM IOTF MQTT Broker');
 });
 
 client.on('message', Meteor.bindEnvironment(function callback(topic, message) { 
@@ -26,7 +26,7 @@ client.on('message', Meteor.bindEnvironment(function callback(topic, message) {
       currentState: state, //function defined below to check against machineRules
       stateChange: checkForChange(state) //function defined below to check for state change
     },
-    ts: new Date(JSON.parse(message.toString()).ts) //best practice is to save datetime in BSON objects in MONGODB
+    ts: new Date(JSON.parse(message.toString()).ts) //best practice is to save datetime in BSON objects in MONGODB, BSON is in UTC
   });
 }));
 
@@ -50,9 +50,11 @@ function checkForChange(currentState) {
     const lastState = Machines.find({},{sort: {ts:-1}, limit:1}).fetch()[0].state.currentState
     return currentState != lastState
   }
+  // need the catch here because when the database is empty to begin with, error arises when lastState=undefined.
   catch(err) {
     return true
   }
 }
+
 
 
