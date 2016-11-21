@@ -1,4 +1,5 @@
 import './top-navbar.html';
+import '../../imports/ui/components/totemStatus.js';
 
 Template.topNavbar.rendered = function(){
 

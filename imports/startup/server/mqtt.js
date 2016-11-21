@@ -1,37 +1,50 @@
 import mqtt from 'mqtt';
 import { Machines } from '../../api/machines/machines.js';
+import { Totems } from '../../api/totems/totems.js';
 import { Rules } from '../../api/machines/machines.js';
+// import ibmiotf from 'ibmiotf';
+var Client = require("ibmiotf");
 
-var client  = mqtt.connect({
-  // Reads variables from file "development_env.json" located in root
-  // you have to start meteor and load this file using command "meteor --settings development_env.json"
-  host: Meteor.settings.mqtt.host,
-  port: 1883,
-  username: Meteor.settings.mqtt.username,
-  password: Meteor.settings.mqtt.password,
-  clientId: Meteor.settings.mqtt.clientId
-});
+// Reads variables from file "development_env.json" located in root
+// you have to start meteor and load this file using command "meteor --settings development_env.json"
+const clientConfig = {
+  "org" : Meteor.settings.mqtt.orgId,
+  "id" : Meteor.settings.mqtt.clientId,
+  "domain": "internetofthings.ibmcloud.com",
+  "auth-key" : Meteor.settings.mqtt.appId,
+  "auth-token" : Meteor.settings.mqtt.apiKey
+}
+
+var client  = new Client.IotfApplication(clientConfig)
+
+client.connect();
 
 client.on('connect', function () {
-  client.subscribe('iot-2/type/Accuvim001/id/+/evt/+/fmt/+');
-  client.subscribeToDeviceStatus();
+  client.subscribeToDeviceEvents('Accuvim001', '+', '+');
+  client.subscribeToDeviceStatus('Accuvim001', 'pm1');
   console.log('connected to IBM IOTF MQTT Broker');
 });
 
-client.on('deviceStatus', function(deviceType, deviceId, payload, topic){
+client.on('deviceStatus', Meteor.bindEnvironment(function callback(deviceType, deviceId, payload, topic) {   
   console.log("Device status from :: "+deviceType+" : "+deviceId+" with payload : "+payload);
-});
+  Totems.insert({
+    deviceType: deviceType,
+    deviceId: deviceId,
+    topic: topic,
+    payload: JSON.parse(payload)
+  })
+}));
 
-client.on('message', Meteor.bindEnvironment(function callback(topic, message) { 
-  console.log(message.toString());
-  const state = checkCurrentState(JSON.parse(message.toString()).d.apower);
+client.on("deviceEvent", Meteor.bindEnvironment(function callback(deviceType, deviceId, eventType, format, payload) { 
+  // console.log("Device Event from :: "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
+  const state = checkCurrentState(JSON.parse(payload).d.apower);
   Machines.insert({
-    message: JSON.parse(message.toString()).d,
+    message: JSON.parse(payload).d,
     state: {
       currentState: state, //function defined below to check against machineRules
       stateChange: checkForChange(state) //function defined below to check for state change
     },
-    ts: new Date(JSON.parse(message.toString()).ts) //best practice is to save datetime in BSON objects in MONGODB, BSON is in UTC
+    ts: new Date(JSON.parse(payload).ts) //best practice is to save datetime in BSON objects in MONGODB, BSON is in UTC
   });
 }));
 

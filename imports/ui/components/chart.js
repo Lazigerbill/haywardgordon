@@ -8,6 +8,7 @@ Template.chart.onCreated(function(){
 	this.subscribe("meterData", function(){
 		const query = Machines.find({}, {sort: {ts: 1}});
 		const data = query.fetch();
+		// need to lookout for invalid data, and catch error when tranforming into array
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
 			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);
