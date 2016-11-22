@@ -11,9 +11,9 @@ Template.chart.onCreated(function(){
 		// need to lookout for invalid data, and catch error when tranforming into array
 		const processed_json = new Array()
 		for (i = 0; i < data.length; i++) {
-			processed_json.push([Date.parse(data[i].ts), data[i].message.apower]);
+			processed_json.push([moment(data[i].ts).valueOf(), data[i].message.apower]);
 		}
-
+		Highcharts.setOptions({global: { useUTC: false } });
 		liveChart = Highcharts.chart('chart', {
 
 					chart: {
@@ -44,7 +44,7 @@ Template.chart.onCreated(function(){
 					},
 
 		      title: {
-		      		text: 'Real time power consumption'
+		      		text: 'Real time power consumption - ' + moment().format("dddd, MMMM Do YYYY")
 		      },
 
 					subtitle: {
@@ -111,7 +111,7 @@ Template.chart.onCreated(function(){
 	        added: function(id, doc) {
 	            if (!initializing) {
 	            	const newPoint = new Array();
-	            	newPoint.push(Date.parse(doc.ts), doc.message.apower);
+	            	newPoint.push(moment(doc.ts).valueOf(), doc.message.apower);
 	            	// console.log(newPoint);
 	                liveChart.series[0].addPoint(newPoint, true, true);
 	            }

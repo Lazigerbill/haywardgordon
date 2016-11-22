@@ -11,12 +11,7 @@ import '/imports/ui/pages/login/forgotPassword.js';
 import '/imports/ui/pages/login/login.js';
 import '/imports/ui/pages/login/passwordReset.js';
 import '/imports/ui/pages/login/register.js'
-import '../../ui/pages/dashboards/dashboard-1.js';
-import '../../ui/pages/dashboards/dashboard-2.js';
-import '../../ui/pages/dashboards/dashboard-3.js';
-import '../../ui/pages/dashboards/dashboard-4.js';
-import '../../ui/pages/dashboards/dashboard-4l.js';
-import '../../ui/pages/dashboards/dashboard-5.js';
+import '../../ui/pages/dashboards/history.js';
 import '../../ui/pages/dashboards/totemdash.js';
 
 
@@ -48,14 +43,8 @@ Router.route('/', function () {
 	this.render('/totemdash');
 });
 
-Router.route('/dashboard-1');
-Router.route('/dashboard-2');
-Router.route('/dashboard-3');
-Router.route('/dashboard-4');
-Router.route('/dashboard-4l');
-Router.route('/dashboard-5');
+Router.route('/history');
 Router.route('/totemdash');
-Router.route('/pageOne');
 
 
 // Routes for login system

@@ -36,7 +36,7 @@ client.on('deviceStatus', Meteor.bindEnvironment(function callback(deviceType, d
 }));
 
 client.on("deviceEvent", Meteor.bindEnvironment(function callback(deviceType, deviceId, eventType, format, payload) { 
-  // console.log("Device Event from :: "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
+  console.log("Device Event from :: "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
   const state = checkCurrentState(JSON.parse(payload).d.apower);
   Machines.insert({
     message: JSON.parse(payload).d,
