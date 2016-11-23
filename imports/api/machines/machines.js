@@ -12,13 +12,16 @@ if (Meteor.isServer) {
 	});
 };
 
-// Query constructors for Machine readings
-dataOnDemand = function(date){
-	const startTime = new Date(date);
-	const endTime = new Date(moment(date).endOf('day'));
-	console.log(startTime, endTime)
-	return {
-		find: {'ts': {$gte: startTime, $lte: endTime}}, 
-		options: {sort: {ts: 1}}
-	};
-};
+// History method
+Meteor.methods({
+	dataOnDemand: function(date){
+		const startTime = new Date(date);
+		const endTime = new Date(moment(date).endOf('day'));
+		const data = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}});
+		const chartData = new Array();
+		data.forEach(function(item){
+		    chartData.push([moment(item.ts).valueOf(), item.message.apower]);
+		});
+		return chartData;
+	}
+});
