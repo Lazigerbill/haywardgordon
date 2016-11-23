@@ -1,23 +1,120 @@
 import './history.html';
 import { Machines } from '../../../api/machines/machines.js';
+var Highcharts = require('highcharts/highstock');
+require('highcharts/modules/exporting')(Highcharts);
 
 Template.history.onRendered(function(){
-  $('#datePicker').datetimepicker({
-    inline: true,
-    maxDate: moment(),
-    calendarWeeks: true
-  });
-  this.subscribe('history');
+    $('#datePicker').datetimepicker({
+        inline: true,
+        maxDate: moment(),
+        calendarWeeks: true
+    });
+    this.subscribe('history');
 });
 
 Template.history.events({
-  'click #submit'(event) {
+    'click #submit'(event) {
 	    // Prevent default browser form submit
-    event.preventDefault();
-    const date = $('#datePicker').data("DateTimePicker").date().format();
-    const data = Machines.find(dataOnDemand(date).find, dataOnDemand(date).options);
-    console.log(data.fetch());
-	}
+        event.preventDefault();
+
+        const date = $('#datePicker').data("DateTimePicker").date().format(); 
+        const data = Machines.find(dataOnDemand(date).find, dataOnDemand(date).options);
+        const chartData = new Array()
+        data.forEach(function(item){
+            chartData.push([moment(item.ts).valueOf(), item.message.apower]);
+        })
+        
+        historyChart = Highcharts.chart('historyChart', {
+
+            chart: {
+            zoomType: 'x',
+            },
+
+            rangeSelector: {
+                allButtonsEnabled: true,
+                enabled: true,
+
+                buttons: [{
+                    count: 1,
+                    type: 'hour',
+                    text: '1H'
+                    }, {
+                        count: 4,
+                        type: 'hour',
+                        text: '4H'
+                    }, {
+                        count: 8,
+                        type: 'hour',
+                        text: '8H'
+                    }, {
+                        count: 12,
+                        type: 'hour',
+                        text: '12H'
+                }],
+            },
+
+            title: {
+                text: 'Historic power consumption - ' + moment(date).format("dddd, MMMM Do YYYY")
+            },
+
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+
+            xAxis: {
+                type: 'datetime'
+            },
+
+            yAxis: {
+                floor: 0,
+                title: {
+                    text: 'Power(W)'
+                }
+            },
+
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+
+                marker: {
+                    radius: 2
+                },
+
+                lineWidth: 1,
+
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+
+                threshold: null
+                }
+            },
+
+            series : [{
+                type: 'area',
+                name: 'Single phase',
+                data : chartData,
+                gapSize : 2,
+                tooltip: {
+                    valueDecimals: 4
+                }
+             }]
+        })
+    }
 });
 
 

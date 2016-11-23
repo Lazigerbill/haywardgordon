@@ -8,7 +8,15 @@
                      <button id="submit" class="btn btn-primary btn-block m-t">Submit</button>
                 </div>
                  <div class="col-md-9">
-                    <!-- {{> chart }} -->
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Historic Power</h5>
+                                {{>iboxTools}}
+                            </div>
+                            <div class="ibox-content">
+                                <div id="historyChart"></div>
+                            </div>
+                        </div>
                 </div>
             </div>               
         </div>
