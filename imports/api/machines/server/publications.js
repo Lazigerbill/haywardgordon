@@ -10,6 +10,11 @@ Meteor.publish('meterData', function(){
 	return data;
 });
 
+Meteor.publish('history', function(date){
+	return Machines.find({}, {sort:{'ts':1}})
+	// return Machines.find(dataOnDemand(date).find, dataOnDemand(date).options);
+});
+
 Meteor.publish('rules', function(){
 	const data = Rules.find();
 	return data;

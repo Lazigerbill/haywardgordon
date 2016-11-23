@@ -8,17 +8,17 @@ export const Rules = new Mongo.Collection('machineRules');
 
 if (Meteor.isServer) {
 	Meteor.startup(function () {  
-	  Machines._ensureIndex({ "ts": -1});
+	  Machines._ensureIndex({ "ts": 1});
 	});
 };
 
 // Query constructors for Machine readings
-oneDay = function(date) {
-	const starttime = new Date(date.setHours(0,0,0,0))
-	// const endtime = starttime.
+dataOnDemand = function(date){
+	const startTime = new Date(date);
+	const endTime = new Date(moment(date).endOf('day'));
+	console.log(startTime, endTime)
 	return {
-		find: {},
-		options: (sort:{ts:1}, $gt:{ts: starttime})
-	}
-}
-
+		find: {'ts': {$gte: startTime, $lte: endTime}}, 
+		options: {sort: {ts: 1}}
+	};
+};
