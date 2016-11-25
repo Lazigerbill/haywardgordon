@@ -1,6 +1,6 @@
 <template name = "loadingModal">
 	<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -10,7 +10,9 @@
 				</div>
 				<div class="modal-body">
 					<div style="height:200px">
-					   <span id="modalText" style="position: absolute;display: block;top: 50%;left: 50%;">Loading...</span>
+					   	<span id="modalText" style="position: absolute;display: block;top: 50%;left: 50%;">
+					   		{{> spinner }}
+					   	</span>
 					 </div>
 				</div>
 <!-- 				<div class="modal-footer">

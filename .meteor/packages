@@ -42,3 +42,4 @@ chrismbeckett:toastr				#growl-like notification
 reactive-dict@1.1.8
 momentjs:moment
 tsega:bootstrap3-datetimepicker
+sacha:spin

@@ -46,3 +46,7 @@ Template.totemdash.onCreated(function(){
 
 	});
 })
+
+Template.totemdash.onRendered(function(){
+	$('#loadingModal').modal('show');
+})
