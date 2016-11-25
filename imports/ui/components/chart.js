@@ -7,12 +7,11 @@ require('highcharts/modules/exporting')(Highcharts);
 Template.chart.onCreated(function(){
 	this.subscribe("meterData", function(){
 		const query = Machines.find({}, {sort: {ts: 1}});
-		const data = query.fetch();
 		// need to lookout for invalid data, and catch error when tranforming into array
 		const processed_json = new Array()
-		for (i = 0; i < data.length; i++) {
-			processed_json.push([moment(data[i].ts).valueOf(), data[i].message.apower]);
-		}
+		query.forEach(function(item){
+				    processed_json.push([item.ts.getTime(), item.message.apower]);
+				});
 		Highcharts.setOptions({global: { useUTC: false } });
 		liveChart = Highcharts.chart('chart', {	
 
@@ -21,11 +20,12 @@ Template.chart.onCreated(function(){
 		      },
 
 					rangeSelector: {
-							allButtonsEnabled: true,
+							allButtonsEnabled: false,
 							enabled: true,
+							inputEnabled: false,
 
 							buttons: [{
-			                    count: 10,
+			                    count: 15,
 			                    type: 'minute',
 			                    text: '10m'
 			                }, {

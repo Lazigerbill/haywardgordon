@@ -20,7 +20,7 @@ Meteor.methods({
 		const data = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}});
 		const chartData = new Array();
 		data.forEach(function(item){
-		    chartData.push([moment(item.ts).valueOf(), item.message.apower]);
+		    chartData.push([item.ts.getTime(), item.message.apower]);
 		});
 		return chartData;
 	}

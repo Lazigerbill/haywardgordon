@@ -18,7 +18,7 @@ Template.history.events({
 
         const date = $('#datePicker').data("DateTimePicker").date().format(); 
         Meteor.call('dataOnDemand', date, function(error, result){
-
+            console.log(result);
             historyChart = Highcharts.chart('historyChart', {
 
                 chart: {
