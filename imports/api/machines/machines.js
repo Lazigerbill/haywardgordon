@@ -16,7 +16,7 @@ if (Meteor.isServer) {
 Meteor.methods({
 	dataOnDemand: function(date){
 		const startTime = new Date(date);
-		const endTime = new Date(moment(date).endOf('day'));
+		const endTime = moment().endOf('day').toDate();;
 		const data = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}});
 		const chartData = new Array();
 		data.forEach(function(item){
