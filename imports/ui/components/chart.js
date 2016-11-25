@@ -14,7 +14,7 @@ Template.chart.onCreated(function(){
 			processed_json.push([moment(data[i].ts).valueOf(), data[i].message.apower]);
 		}
 		Highcharts.setOptions({global: { useUTC: false } });
-		liveChart = Highcharts.chart('chart', {
+		liveChart = Highcharts.chart('chart', {	
 
 					chart: {
 		      		zoomType: 'x',
@@ -25,10 +25,14 @@ Template.chart.onCreated(function(){
 							enabled: true,
 
 							buttons: [{
-                count: 1,
-                type: 'hour',
-                text: '1H'
-	            }, {
+			                    count: 10,
+			                    type: 'minute',
+			                    text: '10m'
+			                }, {
+				                count: 1,
+				                type: 'hour',
+				                text: '1H'
+				            }, {
 								count: 4,
 								type: 'hour',
 								text: '4H'
@@ -37,9 +41,8 @@ Template.chart.onCreated(function(){
 								type: 'hour',
 								text: '8H'
 							}, {
-								count: 12,
-								type: 'hour',
-								text: '12H'
+								type: 'all',
+								text: 'all'
 							}],
 					},
 
