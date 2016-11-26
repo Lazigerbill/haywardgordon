@@ -7,12 +7,13 @@ require('highcharts/modules/exporting')(Highcharts);
 Template.chart.onCreated(function(){
 	this.subscribe("meterData", function(){
 		const query = Machines.find({}, {sort: {ts: 1}});
+		console.log(query.count());
 		// need to lookout for invalid data, and catch error when tranforming into array
 		const processed_json = new Array()
 		query.forEach(function(item){
 		    processed_json.push([item.ts.getTime(), item.message.apower]);
 		});
-		Highcharts.setOptions({global: { timezoneOffset: 5 * 60 } });
+		// Highcharts.setOptions({global: { timezoneOffset: 5 * 60 } });
 		liveChart = Highcharts.chart('chart', {	
 			chart: {
 	      		zoomType: 'x',

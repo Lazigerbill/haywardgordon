@@ -13,7 +13,7 @@ Template.history.onRendered(function(){
     // Initialize chart to today's date
     const date = moment().startOf('day').format(); 
     Meteor.call('dataOnDemand', date, function(error, result){
-        // Highcharts.setOptions({global: { useUTC: false } });
+        Highcharts.setOptions({global: { useUTC: false } });
         historyChart = Highcharts.chart('historyChart', {
             chart: {
             zoomType: 'x',
@@ -85,6 +85,7 @@ Template.history.events({
         const date = $('#datePicker').data("DateTimePicker").date().format(); 
         Meteor.call('dataOnDemand', date, function(error, result){
             historyChart.series[0].setData(result,true);
+            historyChart.setTitle({ text: 'Historic power consumption - ' + moment(date).format("dddd, MMMM Do YYYY") })
             $('#loadingModal').modal('hide');          
         });
     }
