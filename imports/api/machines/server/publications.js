@@ -4,7 +4,7 @@ import { Rules } from '../machines.js';
 
 
 Meteor.publish('meterData', function(){
-	startTime = moment().startOf('day').toDate();
+	startTime = new Date(moment().startOf('day'));
 	const data = Machines.find({'ts': {$gte: startTime}}, {sort: {ts: 1}});
 	return data;
 });
