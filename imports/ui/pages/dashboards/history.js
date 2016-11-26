@@ -13,7 +13,7 @@ Template.history.onRendered(function(){
     // Initialize chart to today's date
     const date = moment().startOf('day').format(); 
     Meteor.call('dataOnDemand', date, function(error, result){
-        Highcharts.setOptions({global: { useUTC: false } });
+        // Highcharts.setOptions({global: { useUTC: false } });
         historyChart = Highcharts.chart('historyChart', {
             chart: {
             zoomType: 'x',

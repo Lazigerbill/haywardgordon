@@ -12,7 +12,7 @@ Template.chart.onCreated(function(){
 		query.forEach(function(item){
 		    processed_json.push([item.ts.getTime(), item.message.apower]);
 		});
-		Highcharts.setOptions({global: { useUTC: false } });
+		Highcharts.setOptions({global: { timezoneOffset: 5 * 60 } });
 		liveChart = Highcharts.chart('chart', {	
 			chart: {
 	      		zoomType: 'x',
