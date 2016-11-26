@@ -18,7 +18,7 @@ Meteor.methods({
 		// when doing a data query in mongodb, it only takes JS date object.  However, moment().toDate() doesn't work.
 		// It has to be new Date()
 		const startTime = new Date(date);
-		const endTime = new Date(moment(date).endOf('day'));
+		const endTime = new Date(moment().endOf('day').utc().format());
 		const data = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}});
 		console.log(data.fetch());
 		const chartData = new Array();
