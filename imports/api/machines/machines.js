@@ -15,8 +15,9 @@ if (Meteor.isServer) {
 // History method
 Meteor.methods({
 	dataOnDemand: function(date){
-		// when doing a data query in mongodb, it only takes JS date object.  However, moment().toDate() doesn't work.
-		// It has to be new Date()
+		// Remember to set Heroku timezone
+		// This only applies when you need to query end of day or start of day
+		// heroku config:add TZ="America/New_York"
 		const startTime = new Date(date);
 		const endTime = new Date(moment(date).endOf('day'));
 		const data = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}});

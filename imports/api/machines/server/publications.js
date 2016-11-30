@@ -4,9 +4,8 @@ import { Rules } from '../machines.js';
 
 
 Meteor.publish('meterData', function(){
-	const startTime = new Date(moment().startOf('day').utc().format());
+	const startTime = moment().startOf('day').toDate();
 	const data = Machines.find({'ts': {$gte: startTime}}, {sort: {ts: 1}});
-	console.log(data.count());
 	return data;
 });
 
