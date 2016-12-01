@@ -88,6 +88,22 @@ Template.history.events({
             historyChart.setTitle({ text: 'Historic power consumption - ' + moment(date).format("dddd, MMMM Do YYYY") })
             $('#loadingModal').modal('hide');          
         });
+    },
+    'click #export'(event) {
+        event.preventDefault();
+        $( event.target ).button( 'loading' );
+        const date = $('#datePicker').data("DateTimePicker").date().format(); 
+        Meteor.call('exportCsv', date, function(err, fileContent){
+            var nameFile = new Date(date).toDateString() + '.csv';
+            if(fileContent){
+                var blob = new Blob([fileContent], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, nameFile);
+                $( event.target ).button( 'reset' );
+            }
+            if (error){
+                console.log(error.reason);
+            }   
+        })
     }
 });
 
