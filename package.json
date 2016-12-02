@@ -15,7 +15,6 @@
     "jquery": "^2.2.4",
     "meteor-node-stubs": "^0.2.4",
     "moment": "^2.16.0",
-    "mongo-xlsx": "^1.0.12",
     "mqtt": "^1.14.0",
     "utf-8-validate": "^1.2.1"
   }

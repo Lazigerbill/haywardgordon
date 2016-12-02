@@ -6,7 +6,6 @@ export const Machines = new Mongo.Collection('machines');
 export const Rules = new Mongo.Collection('machineRules');
 
 if (Meteor.isServer) {
-	var mongoXlsx = require('mongo-xlsx');
 	Meteor.startup(function () {  
 	  Machines._ensureIndex({ "ts": 1});
 	});
