@@ -93,6 +93,7 @@ Template.history.events({
         event.preventDefault();
         $( event.target ).button( 'loading' );
         const date = $('#datePicker').data("DateTimePicker").date().format(); 
+        console.log(date);
         Meteor.call('exportCsv', date, function(err, fileContent){
             var nameFile = new Date(date).toDateString() + '.csv';
             if(fileContent){
@@ -100,7 +101,7 @@ Template.history.events({
                 saveAs(blob, nameFile);
                 $( event.target ).button( 'reset' );
             }
-            if (error){
+            if (err){
                 console.log(error.reason);
             }   
         })

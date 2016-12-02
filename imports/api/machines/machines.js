@@ -30,8 +30,24 @@ if (Meteor.isServer) {
 		exportCsv: function(date) {
 			const startTime = new Date(date);
 			const endTime = new Date(moment(date).endOf('day'));
-			const collection = Machines.find({'ts': {$gte: startTime, $lte: endTime}}, {sort: {ts: 1}}).fetch();
-			console.log(collection);
+			const pipeline = [{ 
+				$match: { 
+					ts: { 
+						$gt: startTime, 
+						$lt: endTime
+					} 
+				} 
+			}, {
+				$project: {
+					_id: 0, 
+					TimeStamp: "$ts",
+					Current: "$message.current",
+					Voltage: "$message.v12",
+					Power: "$message.apower",
+					// MachineState: "$state.currentState"
+				}
+			}]
+			const collection = Machines.aggregate(pipeline)
 			var heading = true; // Optional, defaults to true
 			var delimiter = ";" // Optional, defaults to ",";
 			return exportcsv.exportToCSV(collection, heading, delimiter);
