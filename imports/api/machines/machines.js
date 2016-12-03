@@ -26,6 +26,10 @@ if (Meteor.isServer) {
 			return chartData;
 		},
 
+		aggStage: function(date) {
+
+		},
+
 		exportCsv: function(date) {
 			const startTime = new Date(date);
 			const endTime = new Date(moment(date).endOf('day'));
@@ -37,6 +41,10 @@ if (Meteor.isServer) {
 					} 
 				} 
 			}, {
+				$sort: {
+					ts: 1
+				}
+			}, {	
 				$project: {
 					_id: 0, 
 					TimeStamp: "$ts",
