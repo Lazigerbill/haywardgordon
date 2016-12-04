@@ -26,10 +26,6 @@ if (Meteor.isServer) {
 			return chartData;
 		},
 
-		aggStage: function(date) {
-
-		},
-
 		exportCsv: function(date) {
 			const startTime = new Date(date);
 			const endTime = new Date(moment(date).endOf('day'));
@@ -51,6 +47,7 @@ if (Meteor.isServer) {
 					Current: "$message.current",
 					Voltage: "$message.v12",
 					Power: "$message.apower",
+					State: "$state.currentState"
 					// MachineState: "$state.currentState"
 				}
 			}]
@@ -58,6 +55,16 @@ if (Meteor.isServer) {
 			var heading = true; // Optional, defaults to true
 			var delimiter = ";" // Optional, defaults to ",";
 			return exportcsv.exportToCSV(collection, heading, delimiter);
+		},
+
+		aggGroup: function(stage) {
+			const pipeline = [{
+				$group: {
+					State: {
+						$sum: 1
+					}
+				}
+			}]
 		}
 	});
 };

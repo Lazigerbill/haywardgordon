@@ -1,4 +1,5 @@
 import './history.html';
+import '../../components/aggCard.js';
 import { Machines } from '../../../api/machines/machines.js';
 var Highcharts = require('highcharts/highstock');
 require('highcharts/modules/exporting')(Highcharts);
@@ -10,8 +11,14 @@ Template.history.onRendered(function(){
         maxDate: moment(),
         calendarWeeks: true
     });
-    // Initialize chart to today's date
     const date = moment().startOf('day').format(); 
+
+    // Aggregate data here - grouping for basic analytics
+    // Meteor.call('aggGroup', date, function(error, result){
+    //     
+    // });
+
+    // Initialize chart to today's date
     Meteor.call('dataOnDemand', date, function(error, result){
         Highcharts.setOptions({global: { useUTC: false } });
         historyChart = Highcharts.chart('historyChart', {
