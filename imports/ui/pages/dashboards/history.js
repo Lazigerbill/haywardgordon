@@ -8,15 +8,15 @@ Template.history.onRendered(function(){
     $('#loadingModal').modal('show');
     $('#datePicker').datetimepicker({
         inline: true,
-        maxDate: moment(),
+        maxDate: moment().subtract(1, 'days'),
         calendarWeeks: true
     });
     const date = moment().startOf('day').format(); 
 
     // Aggregate data here - grouping for basic analytics
-    // Meteor.call('aggGroup', date, function(error, result){
-    //     
-    // });
+    Meteor.call('aggGroup', date, function(error, result){
+        console.log(result);
+    });
 
     // Initialize chart to today's date
     Meteor.call('dataOnDemand', date, function(error, result){

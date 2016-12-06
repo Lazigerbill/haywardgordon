@@ -57,14 +57,26 @@ if (Meteor.isServer) {
 			return exportcsv.exportToCSV(collection, heading, delimiter);
 		},
 
-		aggGroup: function(stage) {
+		aggGroup: function(date) {
+			const startTime = new Date(date);
+			const endTime = new Date(moment(date).endOf('day'));
 			const pipeline = [{
+				$match: { 
+					ts: { 
+						$gt: startTime, 
+						$lt: endTime
+					} 
+				} 
+			}, {
 				$group: {
-					State: {
-						$sum: 1
-					}
+					_id: "$state.currentState",
+					totalTime: { $sum: 5},
+					count: { $sum: 1 },
+					avgPower: {$avg: "$message.apower"}
 				}
 			}]
+			console.log (Machines.aggregate(pipeline));
+			return Machines.aggregate(pipeline);
 		}
 	});
 };
