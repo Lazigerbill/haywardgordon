@@ -11,7 +11,7 @@ Template.history.onRendered(function(){
         maxDate: moment().subtract(1, 'days'),
         calendarWeeks: true
     });
-    const date = moment().startOf('day').format(); 
+    const date = $('#datePicker').data("DateTimePicker").date().format(); 
 
     // Aggregate data here - grouping for basic analytics
     Meteor.call('aggGroup', date, function(error, result){
@@ -94,6 +94,9 @@ Template.history.events({
             historyChart.series[0].setData(result,true);
             historyChart.setTitle({ text: 'Historic power consumption - ' + moment(date).format("dddd, MMMM Do YYYY") })
             $('#loadingModal').modal('hide');          
+        });
+        Meteor.call('aggGroup', date, function(error, result){
+            console.log(result);
         });
     },
     'click #export'(event) {
